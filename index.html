@@ -3,592 +3,467 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>诚信抉择 · 会计职业道德模拟训练器（升级版）</title>
+    <title>大秦变法·商鞅立木取信 | 互动历史演绎</title>
+    <!-- 引入字体与图标库，提升古风质感 -->
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none; /* 避免拖动文字，不影响阅读 */
         }
+
         body {
-            background: #f0f2f5;
-            font-family: 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
-            padding: 30px 20px;
-            color: #1e2a3a;
-        }
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .hero {
-            background: linear-gradient(135deg, #1e3c2c, #2a6b47);
-            color: white;
-            padding: 30px 25px;
-            border-radius: 32px;
-            margin-bottom: 30px;
-            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-        }
-        .hero h1 {
-            font-size: 2.2rem;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #2e241f 0%, #1f1915 100%);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            font-family: 'Noto Serif SC', 'Times New Roman', serif;
+            padding: 20px;
         }
-        .hero h1 small {
-            font-size: 0.9rem;
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-weight: normal;
-        }
-        .grid-2col {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-        .card {
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-        .card-header {
-            background: #f8fafc;
-            padding: 18px 24px;
-            border-bottom: 2px solid #e2e8f0;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #2c5e3b;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .card-body {
-            padding: 24px;
-        }
-        /* 时间轴样式 - 可点击 */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .timeline-node {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            border-left: 3px solid #cbd5e1;
-            padding-left: 20px;
-            position: relative;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .timeline-node:hover {
-            background: #f9fafb;
-            border-radius: 16px;
-        }
-        .timeline-node .year {
-            font-weight: 800;
-            background: #2a6b47;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            min-width: 70px;
-            text-align: center;
-        }
-        .timeline-node .content {
-            flex: 1;
-            background: #f1f5f9;
-            padding: 12px 16px;
-            border-radius: 20px;
-        }
-        .timeline-node .content p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            color: #334155;
-        }
-        .detail-expand {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: #eef2ff;
-            margin-top: 8px;
-            border-radius: 16px;
-            padding: 0 12px;
-        }
-        .detail-expand.show {
-            max-height: 300px;
-            padding: 12px;
-        }
-        .detail-expand p {
-            margin: 6px 0;
-            font-size: 0.85rem;
-        }
-        .scenario-box {
-            background: #fef9e3;
-            border-left: 6px solid #e67e22;
-            padding: 18px;
-            border-radius: 20px;
-            margin-bottom: 25px;
-        }
-        .radio-group {
-            margin: 18px 0 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #f9fafb;
-            padding: 10px 15px;
-            border-radius: 50px;
-            border: 1px solid #e2e8f0;
-            cursor: pointer;
-        }
-        .feedback-area {
-            background: #eef2ff;
-            border-radius: 20px;
-            padding: 14px;
-            margin-top: 18px;
-            border-left: 4px solid #2a6b47;
-        }
-        button {
-            background: #2c5e3b;
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            margin-top: 8px;
-        }
-        .btn-outline {
-            background: white;
-            border: 1px solid #2c5e3b;
-            color: #2c5e3b;
-        }
-        .balance-container {
-            text-align: center;
-            margin: 15px 0;
-        }
-        canvas {
-            background: #fef9e6;
-            border-radius: 30px;
+
+        /* 竹简风格主容器 */
+        .scroll-container {
+            max-width: 850px;
             width: 100%;
-            max-width: 400px;
-            height: auto;
+            background: #fef3d6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(210, 180, 140, 0.1) 2%, transparent 2.5%);
+            background-size: 28px 28px;
+            border-radius: 48px 32px 56px 32px;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.5), inset 0 1px 3px rgba(255, 245, 200, 0.8);
+            border: 1px solid #dbb87c;
+            transition: all 0.2s;
         }
-        .slider-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 15px 0;
-            flex-wrap: wrap;
+
+        /* 卷轴两端装饰 */
+        .scroll-header {
+            background: #c1965c;
+            padding: 16px 20px;
+            border-radius: 48px 32px 0 0;
+            border-bottom: 3px solid #e9c27c;
+            text-align: center;
+            box-shadow: inset 0 -2px 0 #9b6a3a, 0 2px 8px rgba(0,0,0,0.2);
         }
-        .match-analysis {
-            background: #e9f5ef;
-            border-radius: 20px;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 0.9rem;
+
+        .scroll-header h1 {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 6px;
+            color: #fffbdd;
+            text-shadow: 4px 4px 0 #6b3f1c;
+            word-break: keep-all;
         }
-        .quiz-question {
+
+        .scroll-header p {
+            color: #fff0c0;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* 剧情演绎区域 */
+        .story-pavilion {
+            padding: 28px 24px 20px 24px;
+            min-height: 420px;
+            background: #fff8ed;
+            border-radius: 28px;
+            margin: 20px 22px 10px 22px;
+            box-shadow: inset 0 0 0 1px #ffeee0, 0 8px 18px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* 古风标题纹样 */
+        .scene-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #a55820;
+            border-left: 12px solid #c28142;
+            padding-left: 18px;
             margin-bottom: 20px;
-            border-bottom: 1px dashed #ddd;
-            padding-bottom: 12px;
-        }
-        .quiz-option {
-            margin-left: 20px;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #ffebc2;
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-top: 6px;
         }
-        .export-section {
-            background: white;
-            border-radius: 28px;
-            padding: 20px 25px;
-            margin-top: 20px;
+
+        .scene-title i {
+            font-size: 1.8rem;
+            color: #bd7a3a;
+        }
+
+        .story-text {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: #2c2418;
+            margin-bottom: 28px;
+            text-align: justify;
+            background: #fffef7;
+            padding: 16px 18px;
+            border-radius: 24px;
+            border: 1px dashed #e7cfaa;
+            font-weight: 500;
+        }
+
+        .story-text p {
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffe6b3 0%, #ffdd99 80%);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #9b4b1a;
+            font-size: 0.95em;
+        }
+
+        .inscription {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #7c5a3a;
+            border-top: 1px dashed #e2c294;
+            margin-top: 12px;
+            padding-top: 10px;
+            text-align: right;
+        }
+
+        /* 互动按钮区域 */
+        .action-area {
+            margin: 8px 22px 28px 22px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        .btn-warrior {
+            background: #4c2f1d;
+            border: none;
+            color: #f7eac5;
+            font-family: 'Noto Serif SC', monospace;
+            font-weight: bold;
+            font-size: 1.05rem;
+            padding: 12px 28px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 0 #2a1a0e;
+            letter-spacing: 1px;
+            display: inline-flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
-        .student-info {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+
+        .btn-warrior i {
+            font-size: 1.2rem;
         }
-        .student-info input {
-            padding: 10px 15px;
-            border-radius: 40px;
-            border: 1px solid #cbd5e1;
-            width: 180px;
+
+        .btn-warrior:hover {
+            background: #744b2c;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #2a1a0e;
         }
-        @media (max-width: 850px) {
-            .grid-2col {
-                grid-template-columns: 1fr;
+
+        .btn-warrior:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #2a1a0e;
+        }
+
+        .btn-reset {
+            background: #6f4e2e;
+            box-shadow: 0 4px 0 #3f2a17;
+        }
+
+        .btn-reset:hover {
+            background: #8b623f;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 12px 20px 20px 20px;
+            font-size: 0.75rem;
+            color: #b68b54;
+            border-top: 1px solid #ebd5b0;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+
+        @media (max-width: 600px) {
+            .scroll-container {
+                border-radius: 32px 24px 40px 24px;
             }
+            .scene-title {
+                font-size: 1.5rem;
+            }
+            .story-text {
+                font-size: 0.95rem;
+                padding: 12px;
+            }
+            .btn-warrior {
+                padding: 8px 18px;
+                font-size: 0.9rem;
+            }
+            .action-area {
+                gap: 12px;
+            }
+        }
+
+        /* 简单的装饰图案 */
+        .story-pavilion::before {
+            content: "⚔️";
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 38px;
+            opacity: 0.08;
+            pointer-events: none;
+            font-family: monospace;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="hero">
-        <h1>⚖️ 执诚信之笔，算人生总账 <small>会计职业道德模拟训练器（升级版）</small></h1>
-        <p>康美药业·瑞幸咖啡真实警示 | 情景压力测试 | 诚信天平+测验匹配 | 可下载个人诚信报告</p>
+
+<div class="scroll-container">
+    <div class="scroll-header">
+        <h1><i class="fas fa-landmark"></i> 商鞅 · 立木取信 <i class="fas fa-dragon"></i></h1>
+        <p>「法之信，国之本也」| 互动演绎 · 重塑大秦风云</p>
     </div>
 
-    <div class="grid-2col">
-        <!-- 左侧：可点击展开详情的时间轴 -->
-        <div class="card">
-            <div class="card-header">📅 康美药业舞弊时间轴（点击节点展开详情）</div>
-            <div class="card-body">
-                <div class="timeline" id="timelineContainer"></div>
-                <div style="margin-top: 20px; font-size:0.8rem; background:#eef2ff; padding:8px 12px; border-radius: 16px;">
-                    💡 证监会处罚：罚款60万元，主要责任人终身市场禁入，投资者民事诉讼索赔24.59亿元。
-                </div>
-            </div>
+    <div class="story-pavilion" id="storyContent">
+        <!-- 动态剧情区域 -->
+        <div class="scene-title" id="sceneTitle">
+            <i class="fas fa-scroll"></i> <span id="titleText">序幕</span>
         </div>
-
-        <!-- 右侧：情景决策模块 -->
-        <div class="card">
-            <div class="card-header">🎭 压力测试：你会怎么做？</div>
-            <div class="card-body">
-                <div class="scenario-box">
-                    <strong>📌 情景：</strong> 你担任某拟IPO企业会计主管，总经理要求将下季度一笔大额收入（2000万）提前在本季度确认，以满足上市盈利指标，否则可能影响年终奖及团队晋升。
-                </div>
-                <div class="radio-group" id="decisionGroup">
-                    <label><input type="radio" name="ethicsChoice" value="A"> A. 直接拒绝，并立即向审计委员会或独立董事报告</label>
-                    <label><input type="radio" name="ethicsChoice" value="B"> B. 与总经理协商，解释会计准则与《证券法》风险，建议合规处理</label>
-                    <label><input type="radio" name="ethicsChoice" value="C"> C. 按领导要求操作（修改收入确认日期），保住工作业绩</label>
-                </div>
-                <button id="submitDecisionBtn">✅ 提交我的抉择</button>
-                <div id="decisionFeedback" class="feedback-area" style="display:none;"></div>
-            </div>
+        <div class="story-text" id="storyDesc">
+            <!-- 剧情文本动态渲染 -->
         </div>
     </div>
 
-    <div class="grid-2col">
-        <!-- 诚信天平 + 匹配分析 -->
-        <div class="card">
-            <div class="card-header">⚖️ 诚信天平 · 价值权衡器</div>
-            <div class="card-body">
-                <div class="balance-container">
-                    <canvas id="balanceCanvas" width="400" height="200" style="width:100%; max-width:400px"></canvas>
-                </div>
-                <div class="slider-row">
-                    <span>📈 短期利益权重 (%)</span>
-                    <input type="range" id="interestWeight" min="0" max="100" value="50">
-                    <span id="weightValueDisplay" class="weight-value">50%</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span>🔴 利益（奖金/晋升）</span>
-                    <span>🟢 诚信与长远声誉</span>
-                </div>
-                <p style="margin-top: 12px; background:#f1f5f9; padding: 10px; border-radius: 20px; font-size:0.85rem;">
-                    📊 动态提示：利益权重 >70% 时，历史上超80%的会计人员后来陷入职业危机。
-                </p>
-                <!-- 匹配分析与测验结果整合区域 -->
-                <div id="matchAnalysisDiv" class="match-analysis">
-                    <strong>📌 诚信匹配分析</strong><br>
-                    <span id="matchText">请先完成右侧的“诚信原则微测验”，天平权重将与测验结果联动分析。</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 测验模块 -->
-        <div class="card">
-            <div class="card-header">📝 诚信原则微测验（5题）</div>
-            <div class="card-body" id="quizArea"></div>
-            <div style="padding:0 24px 24px 24px">
-                <button id="submitQuizBtn">📋 提交测验并评分</button>
-                <div id="quizScoreFeedback" class="feedback-area" style="margin-top: 12px; display:none;"></div>
-            </div>
-        </div>
+    <div class="action-area" id="actionButtons">
+        <!-- 动态按钮区域 -->
     </div>
-
-    <!-- 导出报告区 -->
-    <div class="export-section">
-        <div class="student-info">
-            <input type="text" id="studentName" placeholder="姓名" value="张三">
-            <input type="text" id="studentId" placeholder="学号" value="2023xxxx">
-        </div>
-        <div>
-            <button id="exportReportBtn" style="background:#2c5e3b; color:white;">📄 生成并下载《诚信决策报告》</button>
-        </div>
+    <div class="footer-note">
+        <i class="fas fa-history"></i> 亲历徙木立信，见证法治之威 · 每一次抉择都将影响民心向背
     </div>
-    <footer style="text-align:center; margin-top:30px; color:#5b6e8c; font-size:0.8rem;">
-        本模拟器基于真实职业伦理情境设计，结合《会计法》《证券法》及康美药业案例，用于《会计职业道德》课程思政教学。
-    </footer>
 </div>
 
 <script>
-    // ----------------------------- 1. 可点击时间轴（展开/收起详情）--------------------------------
-    const timelineData = [
-        { year: "2016-2018", title: "虚增货币资金", summary: "三年累计虚增货币资金约300亿元，伪造银行单据及对账单。", detail: "【思政警示】严重违背诚信原则，导致投资者损失惨重。证监会查明后，公司及相关责任人承担巨额赔偿。" },
-        { year: "2018年", title: "年报披露重大虚假", summary: "虚增营业收入、利润，隐瞒关联交易。", detail: "【法律后果】违反《证券法》第78条，构成信息披露违法，为后续集体诉讼埋下伏笔。" },
-        { year: "2020年5月", title: "证监会下发处罚告知书", summary: "查明财务造假，拟罚款60万元，相关责任人市场禁入。", detail: "【职业警示】财务总监等高管被终身市场禁入，职业生涯终结。“失信即失业”。" },
-        { year: "2021年11月", title: "一审判决", summary: "需赔偿投资者损失24.59亿元，签字会计师承担连带责任。", detail: "【民事责任】会计师事务所被判赔偿24.59亿元，行业震动。诚信不仅是道德，更是经济底线。" }
-    ];
-    const timelineContainer = document.getElementById('timelineContainer');
-    timelineData.forEach(item => {
-        const node = document.createElement('div');
-        node.className = 'timeline-node';
-        node.innerHTML = `
-            <div class="year">${item.year}</div>
-            <div class="content">
-                <strong>${item.title}</strong>
-                <p>${item.summary}</p>
-                <div class="detail-expand" id="detail-${item.year.replace(/\s/g,'')}">
-                    <p>${item.detail}</p>
-                </div>
-                <div style="font-size:0.75rem; color:#2563eb; margin-top:5px;">👇 点击查看详情</div>
-            </div>
-        `;
-        // 点击节点展开/收起
-        const expandDiv = node.querySelector('.detail-expand');
-        node.addEventListener('click', (e) => {
-            e.stopPropagation();
-            expandDiv.classList.toggle('show');
-            const tip = node.querySelector('div[style*="font-size:0.75rem"]');
-            if (expandDiv.classList.contains('show')) {
-                tip.innerHTML = '▲ 点击收起详情';
-            } else {
-                tip.innerHTML = '👇 点击查看详情';
-            }
-        });
-        timelineContainer.appendChild(node);
-    });
+    // ---------- 互动剧情状态机 ----------
+    // 场景定义 (每一个场景包含: title, descHTML, buttons数组)
+    // 确保完整展现商鞅立木取信与变法全貌
 
-    // ----------------------------- 2. 决策引擎 -----------------------------
-    let selectedDecision = null;
-    let decisionFeedbackText = "";
-    const decisionRadios = document.querySelectorAll('input[name="ethicsChoice"]');
-    const submitBtn = document.getElementById('submitDecisionBtn');
-    const feedbackDiv = document.getElementById('decisionFeedback');
+    const scenes = {
+        // 序幕：变法雄心 + 立木背景
+        prologue: {
+            title: "📜 序幕 · 革故鼎新",
+            desc: `
+                <p>战国烽烟，七雄争霸。<span class="highlight">秦孝公</span>力排众议，颁布《求贤令》。卫鞅（后称商鞅）携《法经》入秦，阐述富国强兵之策。孝公大喜，拜为左庶长，欲推行新法。</p>
+                <p>然秦国久受旧贵族盘剥，官府朝令夕改，百姓对法令半信半疑。商鞅深知：<strong>“法不信于民，则令不行”</strong> 。如何让天下人相信新法的威严与公正？</p>
+                <p>一道奇策正在酝酿——<span class="highlight">徙木立信</span>，从此惊天一诺，开启变法大业。</p>
+                <div class="inscription">《史记·商君列传》：“令既具，未布，恐民之不信己…”</div>
+            `,
+            buttons: [
+                { text: "🏮 前往国都南门 · 观立木", action: "goToStanding" }
+            ]
+        },
+        // 南门立木，悬赏搬木 (关键互动分支)
+        standing: {
+            title: "🏯 南门立木 · 悬赏五十金",
+            desc: `
+                <p>秦都栎阳，南门市井人潮涌动。商鞅命吏卒竖立一根三丈之木，旁贴告示：<strong>“能徙此木于北门者，赏十金！”</strong> 百姓围观议论：“一根木头，赏十金？定是戏弄我等！” 无人敢应。</p>
+                <p>商鞅见状，将赏金加至<strong class="highlight">五十金</strong>！黄灿灿的铜铤堆在木旁，光芒灼人。众人既心动又疑惧：“其中必有诈，恐怕搬完木头就会治罪……”</p>
+                <p>商鞅抚须一笑，朗声道：“大秦新法，言出必行！今日徙木，明日变法，信义为基！”</p>
+                <p><i class="fas fa-question-circle"></i> 身为咸阳闾里的一位壮士/百姓，你面临一生最重要的抉择——</p>
+            `,
+            buttons: [
+                { text: "⚡ 挺身而出 · 我愿徙木", action: "branchTry" },
+                { text: "🤔 谨慎观望 · 再等等看", action: "branchWatch" }
+            ]
+        },
+        // 分支1: 亲自徙木成功
+        trySuccess: {
+            title: "🏅 壮士徙木 · 一诺千金",
+            desc: `
+                <p>你穿过人群，大步走到木前，沉声喝道：“俺来！” 双臂发力扛起三丈之木，一步一印朝着北门而去。身后百姓惊呼，官吏策马跟随。</p>
+                <p>到达北门，你放下木头，汗水涔涔。商鞅亲自迎上前，取出<strong class="highlight">五十金</strong>交予你手中，高声宣布：“徙木者，赏金不欺！自今日起，秦国新法，赏罚必信！”</p>
+                <p>围观百姓哗然，继而雷动欢呼：“官府言而有信！商君一言重如山！” 你的勇气，成为了大秦变法第一块基石。<br>从此，<strong>“徙木立信”</strong> 传遍六国，民心归附，新法势不可挡。</p>
+                <div class="inscription"><i class="fas fa-hand-holding-usd"></i> 历史之鉴：重诺轻利，取信于民，法治得行。</div>
+            `,
+            buttons: [
+                { text: "📜 聆听新法 · 变法诏令颁布", action: "toLawReform" }
+            ]
+        },
+        // 分支2: 观望，由另一位壮士完成
+        watchSuccess: {
+            title: "👀 观望之后 · 诚信震惊",
+            desc: `
+                <p>你与多数百姓一样驻足观望，心中忐忑：“官府素来无信，万一搬了木头反遭责罚？”</p>
+                <p>但片刻后，人群中走出一位黝黑壮汉，大喝：“商君乃孝公重臣，岂会戏弄黔首！我来搬！” 他奋力扛木至北门。商鞅当众兑现<strong class="highlight">五十金</strong>！壮汉捧着黄金激动落泪。</p>
+                <p>你内心既惭愧又敬佩，更深切明白：<strong>大秦即将变天，新法必将雷厉风行！</strong> 围观百姓皆跪地高呼：“左庶长令出必行，我等愿遵新法！” 从此，变法信任的种子深植民心。</p>
+                <div class="inscription">《韩非子》云：“小信成则大信立，故明主积于信。” 商鞅以徙木立信，成就变法之基。</div>
+            `,
+            buttons: [
+                { text: "🏛️ 颁布《垦草》《战功》新法", action: "toLawReform" }
+            ]
+        },
+        // 变法令：推行具体内容（完整剧情核心）
+        lawReform: {
+            title: "⚙️ 商鞅变法 · 雷霆新政",
+            desc: `
+                <p>徙木立信后，百姓皆知官府言出必行。商鞅趁势颁布《秦律》新法：</p>
+                <p>• <strong>废井田，开阡陌</strong> —— 承认土地私有，鼓励农耕。<br>
+                • <strong>奖励军功，颁二十等爵</strong> —— 有军功者，各以率受上爵，宗室无军功不得属籍。<br>
+                • <strong>编定户籍，什伍连坐</strong> —— 使“家给人足”，治安严明。<br>
+                • <strong>重农抑商</strong>，发展耕战，国强民富。</p>
+                <p>新法推行一年，旧贵族怨声载道，百姓初时亦有不便，但秦国农业军力迅速提振。然而贵族暗中抵制：“法度严峻，我等昔日特权尽失！”</p>
+                <p>太子嬴驷触犯新法，举国瞩目——商鞅将如何抉择？</p>
+            `,
+            buttons: [
+                { text: "👑 太子犯法 · 刑不上大夫？", action: "toPrinceCase" }
+            ]
+        },
+        // 太子犯法，惩处师傅
+        princeCase: {
+            title: "⚖️ 太子犯法 · 刑无等级",
+            desc: `
+                <p>新法施行第二年，太子嬴驷（后来的秦惠文王）因私自违禁，触犯新律。朝野震动：太子乃储君，若惩处则王室颜面何存？若不惩，新法必废！</p>
+                <p>商鞅凛然进谏：<strong>“法之不行，自上犯之。太子犯法与庶民同罪，然太子不可施刑，当刑其傅！”</strong> 于是，太傅公子虔被处以劓刑，老师公孙贾被施以黥刑。</p>
+                <p>消息传遍秦国，贵族股栗，百姓叹服：“商君铁面无私，连太子师傅都敢惩罚！” 从此无人再敢轻易违抗新法，秦国上下遵纪守法，夜不闭户，路不拾遗。</p>
+                <p>变法十年，国库充盈，甲兵强盛，山东六国始知秦有虎狼之威。</p>
+            `,
+            buttons: [
+                { text: "🌾 盛世大治 · 秦国崛起", action: "toFinale" }
+            ]
+        },
+        // 终章：变法成效， 秦统一基石
+        finale: {
+            title: "🏆 法行天下 · 强秦之基",
+            desc: `
+                <p>商鞅变法二十余载，秦国道不拾遗，山无盗贼，民勇于公战而怯于私斗，乡邑大治。</p>
+                <p>河西之战收复失地，迁都咸阳，新法深入人心。虽然后来商鞅遭旧贵族报复车裂，但其法未废，秦国依靠这套法治体系最终横扫六合，一统天下！</p>
+                <p><span class="highlight">“立木取信”</span>成为千古佳话，印证诚信乃立政之本。历史洪流中，商鞅以一诺而破疑云，开创华夏法家新纪元。</p>
+                <p><i class="fas fa-crown"></i> 感谢你亲历这段波澜壮阔的变法史诗！</p>
+                <div class="inscription">太史公曰：“商君，其天资刻薄人也，然其法行，秦以强。” 信义之重，万古流芳。</div>
+            `,
+            buttons: [
+                { text: "🔄 重演立木 · 再临战国", action: "resetToBeginning" },
+                { text: "📖 敬仰先贤 · 返回序幕", action: "resetToBeginning" }
+            ]
+        }
+    };
 
-    decisionRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => { selectedDecision = e.target.value; });
-    });
-    function getFeedbackByChoice(choice) {
-        if (choice === 'A') return "✅ 你坚守了诚信原则！依据《会计法》第13条及《证券法》第85条，拒绝虚假确认收入避免了法律连带责任。职业声誉得到保全。";
-        if (choice === 'B') return "🤝 理性协商是合规途径。你既坚守了底线，又尝试沟通，有助于企业长期健康发展。符合“客观公正”原则。";
-        return "⚠️ 危险选择！历史教训：康美药业财务总监被终身市场禁入，瑞幸咖啡CFO面临刑事追诉。你的行为将构成虚假陈述，面临法律严惩。";
-    }
-    submitBtn.addEventListener('click', () => {
-        if (!selectedDecision) { alert("请先选择一个行动方案"); return; }
-        const feedbackMsg = getFeedbackByChoice(selectedDecision);
-        decisionFeedbackText = `你的选择：${selectedDecision === 'A' ? '直接拒绝并报告' : (selectedDecision === 'B' ? '协商解释' : '违规操作')}。${feedbackMsg}`;
-        feedbackDiv.innerHTML = `<strong>⚡ 即时反馈：</strong><br>${decisionFeedbackText}`;
-        feedbackDiv.style.display = 'block';
-    });
-
-    // ----------------------------- 3. 诚信天平绘制 + 权重滑块 -----------------------------
-    const canvas = document.getElementById('balanceCanvas');
-    const ctx = canvas.getContext('2d');
-    let currentWeight = 50;
-    function drawBalance(interestWeight) {
-        const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        ctx.beginPath(); ctx.moveTo(w/2, 20); ctx.lineTo(w/2, 60); ctx.lineWidth = 3; ctx.strokeStyle = "#8B5A2B"; ctx.stroke();
-        ctx.beginPath(); ctx.arc(w/2, 20, 6, 0, 2*Math.PI); ctx.fillStyle = "#c98f4b"; ctx.fill();
-        const maxAngle = 0.26;
-        const angle = (interestWeight / 100) * maxAngle * 2 - maxAngle;
-        const pivotX = w/2, pivotY = 70;
-        const armLength = 130;
-        const leftEndX = pivotX - armLength * Math.cos(angle);
-        const leftEndY = pivotY + armLength * Math.sin(angle);
-        const rightEndX = pivotX + armLength * Math.cos(angle);
-        const rightEndY = pivotY - armLength * Math.sin(angle);
-        ctx.beginPath(); ctx.moveTo(leftEndX, leftEndY); ctx.lineTo(rightEndX, rightEndY); ctx.lineWidth = 4; ctx.strokeStyle = "#5a3e1b"; ctx.stroke();
-        ctx.fillStyle = "#d9b48b";
-        ctx.beginPath(); ctx.ellipse(leftEndX, leftEndY+8, 20, 8, 0, 0, 2*Math.PI); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(rightEndX, rightEndY+8, 20, 8, 0, 0, 2*Math.PI); ctx.fill();
-        ctx.fillStyle = "#2c3e2f"; ctx.font = "bold 12px 'Segoe UI'"; ctx.fillText("利益托盘", leftEndX-20, leftEndY);
-        ctx.fillText("诚信托盘", rightEndX+5, rightEndY);
-        ctx.fillStyle = "#0f3b2c"; ctx.font = "italic 10px sans-serif"; ctx.fillText(`利益权重 ${interestWeight}%`, pivotX-30, pivotY-5);
-    }
-    const weightSlider = document.getElementById('interestWeight');
-    const weightSpan = document.getElementById('weightValueDisplay');
-    weightSlider.addEventListener('input', (e) => {
-        currentWeight = parseInt(e.target.value);
-        weightSpan.innerText = currentWeight + "%";
-        drawBalance(currentWeight);
-        updateMatchAnalysis();   // 每次滑块变动都重新匹配分析
-    });
-    drawBalance(50);
-
-    // ----------------------------- 4. 测验题库 -----------------------------
-    const quizQuestions = [
-        { text: "1. 根据《会计职业道德基本原则》，会计人员最基本的底线是？", options: ["A. 专业胜任力", "B. 诚信", "C. 保密", "D. 良好职业行为"], correct: "B", explanation: "诚信是会计职业的核心灵魂。" },
-        { text: "2. 康美药业财务造假案中，虚增货币资金的行为主要违反了哪项原则？", options: ["A. 客观公正", "B. 诚信原则", "C. 保密原则", "D. 专业胜任力"], correct: "B", explanation: "严重违背诚信原则。" },
-        { text: "3. 当上级要求提前确认收入以满足业绩指标时，合规做法是？", options: ["A. 唯命是从", "B. 按公司潜规则处理", "C. 依据准则拒绝并留存沟通记录", "D. 忽略不管"], correct: "C", explanation: "依据《会计法》，会计人员有权拒绝违法指令。" },
-        { text: "4. 以下哪个是诚信原则与法律风险的直接关联？", options: ["A. 可能影响团队合作", "B. 虚增利润可能导致证券欺诈罪", "C. 增加税收筹划空间", "D. 降低审计费用"], correct: "B", explanation: "财务造假可能构成《刑法》第161条违规披露罪。" },
-        { text: "5. 从“商鞅立木取信”到现代会计诚信，共同揭示的道理是？", options: ["A. 诚信能够降低交易成本，产生长期价值", "B. 诚信只在古代有用", "C. 会计诚信与法律无关", "D. 诚信会牺牲企业利益"], correct: "A", explanation: "诚信是社会资本，体现“诚信即生产力”。" }
-    ];
-    let quizUserAnswers = new Array(5).fill(null);
-    let quizScore = null;
-
-    function renderQuiz() {
-        const quizDiv = document.getElementById('quizArea');
-        quizDiv.innerHTML = '';
-        quizQuestions.forEach((q, idx) => {
-            const qDiv = document.createElement('div');
-            qDiv.className = 'quiz-question';
-            qDiv.innerHTML = `<p>${q.text}</p>`;
-            q.options.forEach(opt => {
-                const optDiv = document.createElement('div');
-                optDiv.className = 'quiz-option';
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = `quiz_${idx}`;
-                radio.value = opt.charAt(0);
-                radio.addEventListener('change', (e) => {
-                    quizUserAnswers[idx] = e.target.value;
-                });
-                const label = document.createElement('label');
-                label.innerText = opt;
-                optDiv.appendChild(radio);
-                optDiv.appendChild(label);
-                qDiv.appendChild(optDiv);
-            });
-            quizDiv.appendChild(qDiv);
-        });
-    }
-    renderQuiz();
-
-    // 更新天平与测验的匹配分析（核心新增功能）
-    function updateMatchAnalysis() {
-        if (quizScore === null) {
-            document.getElementById('matchText').innerHTML = "尚未完成测验。请完成右侧5道微测验后，系统将结合您的天平权重给出诚信匹配指数。";
+    // ---------- 辅助函数 ----------
+    function updateUI(sceneKey) {
+        const scene = scenes[sceneKey];
+        if (!scene) {
+            // 容错，回到序幕
+            updateUI('prologue');
             return;
         }
-        const scorePercent = (quizScore / 5) * 100;
-        const interestWeight = currentWeight;
-        // 匹配逻辑：测验得分反映“诚信认知”，天平权重反映“现实利益倾向”
-        let analysis = "";
-        let recommendation = "";
-        if (scorePercent >= 80 && interestWeight <= 40) {
-            analysis = "优秀诚信素养。";
-            recommendation = "您具备高度职业道德认知且能理性权衡利益，是未来资本市场的可靠守护者。";
-        } else if (scorePercent >= 80 && interestWeight > 70) {
-            analysis = "认知高但易受利益诱惑。";
-            recommendation = "您虽然知道诚信原则，但天平显示您对短期利益敏感。建议通过角色扮演强化底线思维。";
-        } else if (scorePercent < 60 && interestWeight <= 40) {
-            analysis = "认知有待提升，但态度端正。";
-            recommendation = "测验分数较低，请重点复习《会计法》及康美案教训；您的利益权重控制良好，保持并加强理论学习。";
-        } else if (scorePercent < 60 && interestWeight > 70) {
-            analysis = "高风险倾向。";
-            recommendation = "诚信认知不足且过度看重短期利益，极易在职场中失守。强烈建议重新学习诚信原则与法律后果案例。";
+        // 更新标题与文本
+        document.getElementById('titleText').innerHTML = scene.title;
+        document.getElementById('storyDesc').innerHTML = scene.desc;
+        
+        // 动态生成按钮
+        const btnContainer = document.getElementById('actionButtons');
+        btnContainer.innerHTML = '';
+        if (scene.buttons && scene.buttons.length > 0) {
+            scene.buttons.forEach(btn => {
+                const buttonEl = document.createElement('button');
+                buttonEl.className = 'btn-warrior';
+                // 增加小图标
+                if (btn.text.includes('🏮') || btn.text.includes('前往')) {
+                    buttonEl.innerHTML = `<i class="fas fa-arrow-right"></i> ${btn.text}`;
+                } else if (btn.text.includes('⚡') || btn.text.includes('挺身')) {
+                    buttonEl.innerHTML = `<i class="fas fa-fist-raised"></i> ${btn.text}`;
+                } else if (btn.text.includes('🏛️') || btn.text.includes('📜')) {
+                    buttonEl.innerHTML = `<i class="fas fa-gavel"></i> ${btn.text}`;
+                } else if (btn.text.includes('⚖️')) {
+                    buttonEl.innerHTML = `<i class="fas fa-balance-scale"></i> ${btn.text}`;
+                } else if (btn.text.includes('重演') || btn.text.includes('返回')) {
+                    buttonEl.innerHTML = `<i class="fas fa-undo-alt"></i> ${btn.text}`;
+                } else {
+                    buttonEl.innerHTML = `<i class="fas fa-hand-point-right"></i> ${btn.text}`;
+                }
+                
+                // 绑定动作
+                buttonEl.addEventListener('click', () => {
+                    const action = btn.action;
+                    switch (action) {
+                        case 'goToStanding':
+                            updateUI('standing');
+                            break;
+                        case 'branchTry':
+                            updateUI('trySuccess');
+                            break;
+                        case 'branchWatch':
+                            updateUI('watchSuccess');
+                            break;
+                        case 'toLawReform':
+                            updateUI('lawReform');
+                            break;
+                        case 'toPrinceCase':
+                            updateUI('princeCase');
+                            break;
+                        case 'toFinale':
+                            updateUI('finale');
+                            break;
+                        case 'resetToBeginning':
+                            updateUI('prologue');
+                            break;
+                        default:
+                            // 若动作对应场景直接存在，则跳转
+                            if (scenes[action]) updateUI(action);
+                            else updateUI('prologue');
+                    }
+                });
+                btnContainer.appendChild(buttonEl);
+            });
         } else {
-            analysis = "中等匹配，需强化诚信价值观。";
-            recommendation = "您的测验成绩和利益权重处于中间区域，建议参与小组辩论和诚信宣誓活动，进一步内化职业道德。";
+            // 安全后备：如果没有按钮，则添加重置按钮
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'btn-warrior btn-reset';
+            resetBtn.innerHTML = '<i class="fas fa-history"></i> 重开剧情';
+            resetBtn.addEventListener('click', () => updateUI('prologue'));
+            btnContainer.appendChild(resetBtn);
         }
-        document.getElementById('matchText').innerHTML = `📊 测验得分：${quizScore}/5 (${scorePercent}分) | 利益权重：${interestWeight}%<br>
-        <strong>匹配结论：${analysis}</strong><br>💡 个性化建议：${recommendation}`;
     }
 
-    const submitQuizBtn = document.getElementById('submitQuizBtn');
-    const quizScoreDiv = document.getElementById('quizScoreFeedback');
-    submitQuizBtn.addEventListener('click', () => {
-        let correctCount = 0;
-        const results = [];
-        quizQuestions.forEach((q, i) => {
-            const userAns = quizUserAnswers[i];
-            const isCorrect = (userAns === q.correct);
-            if (isCorrect) correctCount++;
-            results.push(`第${i+1}题: ${userAns ? userAns : '未答'} (正确答案${q.correct}) — ${isCorrect ? '✓' : '✗'} ${!isCorrect ? q.explanation : ''}`);
-        });
-        quizScore = correctCount;
-        const percent = (correctCount/5)*100;
-        quizScoreDiv.style.display = 'block';
-        quizScoreDiv.innerHTML = `<strong>📊 测验得分：${correctCount}/5 (${percent}分)</strong><br>${results.join('<br>')}<br>💡 诚信原则内化度：${percent>=80 ? '优秀' : (percent>=60 ? '合格，继续加强' : '待提升，建议复习案例')}`;
-        updateMatchAnalysis();   // 提交测验后立即匹配天平分析
-    });
-
-    // ----------------------------- 5. 导出报告（含天平+测验匹配结论）-----------------------------
-    function getCurrentDecisionText() {
-        if (!selectedDecision) return "尚未做出情景选择";
-        if (selectedDecision === 'A') return "直接拒绝并报告 (坚守诚信)";
-        if (selectedDecision === 'B') return "协商解释，引导合规";
-        return "违规操作 (高风险行为)";
+    // 增加额外历史沉浸小彩蛋：当进入trySuccess或watchSuccess时背景微妙变化（很简单的动态感，不用太复杂）
+    // 在关键情节加一点仪式感
+    function extraAtmosphere(sceneKey) {
+        const storyDiv = document.querySelector('.story-pavilion');
+        if (sceneKey === 'trySuccess') {
+            storyDiv.style.transition = "all 0.4s";
+            storyDiv.style.boxShadow = "inset 0 0 0 1px #ffdd99, 0 8px 20px rgba(212, 165, 80, 0.3)";
+            setTimeout(() => { storyDiv.style.boxShadow = ""; }, 800);
+        } else if (sceneKey === 'watchSuccess') {
+            storyDiv.style.borderLeft = "6px solid #c28142";
+            setTimeout(() => { storyDiv.style.borderLeft = ""; }, 600);
+        }
     }
-    function getQuizDetail() {
-        if (quizScore === null) return "未完成测验";
-        return `${quizScore}/5 (${(quizScore/5)*100}分)`;
-    }
-    function getMatchDetail() {
-        if (quizScore === null) return "未完成测验，无法生成匹配分析";
-        const matchDivContent = document.getElementById('matchText').innerHTML;
-        return matchDivContent;
-    }
-    function exportReport() {
-        const studentName = document.getElementById('studentName').value.trim() || "未填";
-        const studentId = document.getElementById('studentId').value.trim() || "未填";
-        const decisionRecord = getCurrentDecisionText();
-        const feedback = decisionFeedbackText || (selectedDecision ? getFeedbackByChoice(selectedDecision) : "尚未提交抉择反馈");
-        const weightVal = currentWeight;
-        const quizStatus = getQuizDetail();
-        const matchAnalysis = getMatchDetail();
-        const now = new Date().toLocaleString();
-        const reportContent = `
-==========================================
-   《会计职业道德》诚信决策报告
-==========================================
-姓名：${studentName}              学号：${studentId}
-生成时间：${now}
 
-一、情景压力测试结果
-----------------------------------------
-面临“提前确认收入”压力时，您的选择是：
-${decisionRecord}
-即时反馈与解析：
-${feedback}
+    // 包装更新UI，加入氛围小效果
+    const originalUpdate = updateUI;
+    window.updateUI = function(sceneKey) {
+        originalUpdate(sceneKey);
+        extraAtmosphere(sceneKey);
+        // 滚动至剧情区域，移动端体验更好
+        document.querySelector('.story-pavilion').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }.bind(this);
 
-二、诚信天平权衡记录
-----------------------------------------
-短期利益权重设定：${weightVal}%
-→ 天平倾斜度提示：${weightVal>70 ? '⚠️ 利益权重大于70%，历史上大多数会计人员后悔未能坚守诚信' : '⚖️ 诚信权重占优，职业道德基础良好'}
+    // 初始加载序幕
+    updateUI('prologue');
 
-三、诚信原则微测验成绩
-----------------------------------------
-${quizStatus}
-
-四、天平与测验匹配分析（课程思政个性化评价）
-----------------------------------------
-${matchAnalysis}
-
-五、职业行为改进承诺（参考模板）
-----------------------------------------
-基于以上模拟与反思，我承诺：
-1. 在真实职场中，面对任何财务数据造假压力，坚决依据《会计法》《证券法》拒绝违规指令；
-2. 主动向审计委员会或监管部门报告利益冲突场景；
-3. 坚持“不做假账”，以专业能力服务高质量发展。
-
-学生电子签名：__________________
-        `;
-        const blob = new Blob([reportContent], {type: 'text/plain;charset=utf-8'});
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = `诚信决策报告_${studentName}_${studentId}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    }
-    document.getElementById('exportReportBtn').addEventListener('click', exportReport);
+    // 手动修正按钮额外命名兼容
+    // 为了确保情节中迁徙立信及变法所有环节都融入了“完整剧情”的互动，所有分支都衔接历史走向。
+    // 增加全局重置监听额外安全（已包含）
+    // 以及为用户提供更好的信息提示，确保体验战国风云完整脉络
+    console.log("商鞅立木取信互动演绎 | 法治精神千古流传");
 </script>
 </body>
 </html>
