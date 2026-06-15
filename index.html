@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>诚信抉择 · 会计职业道德模拟训练器（升级版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f2f5;
+            font-family: 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+            padding: 30px 20px;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .hero {
+            background: linear-gradient(135deg, #1e3c2c, #2a6b47);
+            color: white;
+            padding: 30px 25px;
+            border-radius: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .hero h1 small {
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: normal;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .card-header {
+            background: #f8fafc;
+            padding: 18px 24px;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #2c5e3b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        /* 时间轴样式 - 可点击 */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .timeline-node {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .timeline-node:hover {
+            background: #f9fafb;
+            border-radius: 16px;
+        }
+        .timeline-node .year {
+            font-weight: 800;
+            background: #2a6b47;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            min-width: 70px;
+            text-align: center;
+        }
+        .timeline-node .content {
+            flex: 1;
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 20px;
+        }
+        .timeline-node .content p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+        .detail-expand {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #eef2ff;
+            margin-top: 8px;
+            border-radius: 16px;
+            padding: 0 12px;
+        }
+        .detail-expand.show {
+            max-height: 300px;
+            padding: 12px;
+        }
+        .detail-expand p {
+            margin: 6px 0;
+            font-size: 0.85rem;
+        }
+        .scenario-box {
+            background: #fef9e3;
+            border-left: 6px solid #e67e22;
+            padding: 18px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+        .radio-group {
+            margin: 18px 0 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f9fafb;
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+        .feedback-area {
+            background: #eef2ff;
+            border-radius: 20px;
+            padding: 14px;
+            margin-top: 18px;
+            border-left: 4px solid #2a6b47;
+        }
+        button {
+            background: #2c5e3b;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        .btn-outline {
+            background: white;
+            border: 1px solid #2c5e3b;
+            color: #2c5e3b;
+        }
+        .balance-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        canvas {
+            background: #fef9e6;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .match-analysis {
+            background: #e9f5ef;
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 12px;
+        }
+        .quiz-option {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .export-section {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 25px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .student-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .student-info input {
+            padding: 10px 15px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            width: 180px;
+        }
+        @media (max-width: 850px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>⚖️ 执诚信之笔，算人生总账 <small>会计职业道德模拟训练器（升级版）</small></h1>
+        <p>康美药业·瑞幸咖啡真实警示 | 情景压力测试 | 诚信天平+测验匹配 | 可下载个人诚信报告</p>
+    </div>
+
+    <div class="grid-2col">
+        <!-- 左侧：可点击展开详情的时间轴 -->
+        <div class="card">
+            <div class="card-header">📅 康美药业舞弊时间轴（点击节点展开详情）</div>
+            <div class="card-body">
+                <div class="timeline" id="timelineContainer"></div>
+                <div style="margin-top: 20px; font-size:0.8rem; background:#eef2ff; padding:8px 12px; border-radius: 16px;">
+                    💡 证监会处罚：罚款60万元，主要责任人终身市场禁入，投资者民事诉讼索赔24.59亿元。
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧：情景决策模块 -->
+        <div class="card">
+            <div class="card-header">🎭 压力测试：你会怎么做？</div>
+            <div class="card-body">
+                <div class="scenario-box">
+                    <strong>📌 情景：</strong> 你担任某拟IPO企业会计主管，总经理要求将下季度一笔大额收入（2000万）提前在本季度确认，以满足上市盈利指标，否则可能影响年终奖及团队晋升。
+                </div>
+                <div class="radio-group" id="decisionGroup">
+                    <label><input type="radio" name="ethicsChoice" value="A"> A. 直接拒绝，并立即向审计委员会或独立董事报告</label>
+                    <label><input type="radio" name="ethicsChoice" value="B"> B. 与总经理协商，解释会计准则与《证券法》风险，建议合规处理</label>
+                    <label><input type="radio" name="ethicsChoice" value="C"> C. 按领导要求操作（修改收入确认日期），保住工作业绩</label>
+                </div>
+                <button id="submitDecisionBtn">✅ 提交我的抉择</button>
+                <div id="decisionFeedback" class="feedback-area" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2col">
+        <!-- 诚信天平 + 匹配分析 -->
+        <div class="card">
+            <div class="card-header">⚖️ 诚信天平 · 价值权衡器</div>
+            <div class="card-body">
+                <div class="balance-container">
+                    <canvas id="balanceCanvas" width="400" height="200" style="width:100%; max-width:400px"></canvas>
+                </div>
+                <div class="slider-row">
+                    <span>📈 短期利益权重 (%)</span>
+                    <input type="range" id="interestWeight" min="0" max="100" value="50">
+                    <span id="weightValueDisplay" class="weight-value">50%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>🔴 利益（奖金/晋升）</span>
+                    <span>🟢 诚信与长远声誉</span>
+                </div>
+                <p style="margin-top: 12px; background:#f1f5f9; padding: 10px; border-radius: 20px; font-size:0.85rem;">
+                    📊 动态提示：利益权重 >70% 时，历史上超80%的会计人员后来陷入职业危机。
+                </p>
+                <!-- 匹配分析与测验结果整合区域 -->
+                <div id="matchAnalysisDiv" class="match-analysis">
+                    <strong>📌 诚信匹配分析</strong><br>
+                    <span id="matchText">请先完成右侧的“诚信原则微测验”，天平权重将与测验结果联动分析。</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测验模块 -->
+        <div class="card">
+            <div class="card-header">📝 诚信原则微测验（5题）</div>
+            <div class="card-body" id="quizArea"></div>
+            <div style="padding:0 24px 24px 24px">
+                <button id="submitQuizBtn">📋 提交测验并评分</button>
+                <div id="quizScoreFeedback" class="feedback-area" style="margin-top: 12px; display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导出报告区 -->
+    <div class="export-section">
+        <div class="student-info">
+            <input type="text" id="studentName" placeholder="姓名" value="张三">
+            <input type="text" id="studentId" placeholder="学号" value="2023xxxx">
+        </div>
+        <div>
+            <button id="exportReportBtn" style="background:#2c5e3b; color:white;">📄 生成并下载《诚信决策报告》</button>
+        </div>
+    </div>
+    <footer style="text-align:center; margin-top:30px; color:#5b6e8c; font-size:0.8rem;">
+        本模拟器基于真实职业伦理情境设计，结合《会计法》《证券法》及康美药业案例，用于《会计职业道德》课程思政教学。
+    </footer>
+</div>
+
+<script>
+    // ----------------------------- 1. 可点击时间轴（展开/收起详情）--------------------------------
+    const timelineData = [
+        { year: "2016-2018", title: "虚增货币资金", summary: "三年累计虚增货币资金约300亿元，伪造银行单据及对账单。", detail: "【思政警示】严重违背诚信原则，导致投资者损失惨重。证监会查明后，公司及相关责任人承担巨额赔偿。" },
+        { year: "2018年", title: "年报披露重大虚假", summary: "虚增营业收入、利润，隐瞒关联交易。", detail: "【法律后果】违反《证券法》第78条，构成信息披露违法，为后续集体诉讼埋下伏笔。" },
+        { year: "2020年5月", title: "证监会下发处罚告知书", summary: "查明财务造假，拟罚款60万元，相关责任人市场禁入。", detail: "【职业警示】财务总监等高管被终身市场禁入，职业生涯终结。“失信即失业”。" },
+        { year: "2021年11月", title: "一审判决", summary: "需赔偿投资者损失24.59亿元，签字会计师承担连带责任。", detail: "【民事责任】会计师事务所被判赔偿24.59亿元，行业震动。诚信不仅是道德，更是经济底线。" }
+    ];
+    const timelineContainer = document.getElementById('timelineContainer');
+    timelineData.forEach(item => {
+        const node = document.createElement('div');
+        node.className = 'timeline-node';
+        node.innerHTML = `
+            <div class="year">${item.year}</div>
+            <div class="content">
+                <strong>${item.title}</strong>
+                <p>${item.summary}</p>
+                <div class="detail-expand" id="detail-${item.year.replace(/\s/g,'')}">
+                    <p>${item.detail}</p>
+                </div>
+                <div style="font-size:0.75rem; color:#2563eb; margin-top:5px;">👇 点击查看详情</div>
+            </div>
+        `;
+        // 点击节点展开/收起
+        const expandDiv = node.querySelector('.detail-expand');
+        node.addEventListener('click', (e) => {
+            e.stopPropagation();
+            expandDiv.classList.toggle('show');
+            const tip = node.querySelector('div[style*="font-size:0.75rem"]');
+            if (expandDiv.classList.contains('show')) {
+                tip.innerHTML = '▲ 点击收起详情';
+            } else {
+                tip.innerHTML = '👇 点击查看详情';
+            }
+        });
+        timelineContainer.appendChild(node);
+    });
+
+    // ----------------------------- 2. 决策引擎 -----------------------------
+    let selectedDecision = null;
+    let decisionFeedbackText = "";
+    const decisionRadios = document.querySelectorAll('input[name="ethicsChoice"]');
+    const submitBtn = document.getElementById('submitDecisionBtn');
+    const feedbackDiv = document.getElementById('decisionFeedback');
+
+    decisionRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => { selectedDecision = e.target.value; });
+    });
+    function getFeedbackByChoice(choice) {
+        if (choice === 'A') return "✅ 你坚守了诚信原则！依据《会计法》第13条及《证券法》第85条，拒绝虚假确认收入避免了法律连带责任。职业声誉得到保全。";
+        if (choice === 'B') return "🤝 理性协商是合规途径。你既坚守了底线，又尝试沟通，有助于企业长期健康发展。符合“客观公正”原则。";
+        return "⚠️ 危险选择！历史教训：康美药业财务总监被终身市场禁入，瑞幸咖啡CFO面临刑事追诉。你的行为将构成虚假陈述，面临法律严惩。";
+    }
+    submitBtn.addEventListener('click', () => {
+        if (!selectedDecision) { alert("请先选择一个行动方案"); return; }
+        const feedbackMsg = getFeedbackByChoice(selectedDecision);
+        decisionFeedbackText = `你的选择：${selectedDecision === 'A' ? '直接拒绝并报告' : (selectedDecision === 'B' ? '协商解释' : '违规操作')}。${feedbackMsg}`;
+        feedbackDiv.innerHTML = `<strong>⚡ 即时反馈：</strong><br>${decisionFeedbackText}`;
+        feedbackDiv.style.display = 'block';
+    });
+
+    // ----------------------------- 3. 诚信天平绘制 + 权重滑块 -----------------------------
+    const canvas = document.getElementById('balanceCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentWeight = 50;
+    function drawBalance(interestWeight) {
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        ctx.beginPath(); ctx.moveTo(w/2, 20); ctx.lineTo(w/2, 60); ctx.lineWidth = 3; ctx.strokeStyle = "#8B5A2B"; ctx.stroke();
+        ctx.beginPath(); ctx.arc(w/2, 20, 6, 0, 2*Math.PI); ctx.fillStyle = "#c98f4b"; ctx.fill();
+        const maxAngle = 0.26;
+        const angle = (interestWeight / 100) * maxAngle * 2 - maxAngle;
+        const pivotX = w/2, pivotY = 70;
+        const armLength = 130;
+        const leftEndX = pivotX - armLength * Math.cos(angle);
+        const leftEndY = pivotY + armLength * Math.sin(angle);
+        const rightEndX = pivotX + armLength * Math.cos(angle);
+        const rightEndY = pivotY - armLength * Math.sin(angle);
+        ctx.beginPath(); ctx.moveTo(leftEndX, leftEndY); ctx.lineTo(rightEndX, rightEndY); ctx.lineWidth = 4; ctx.strokeStyle = "#5a3e1b"; ctx.stroke();
+        ctx.fillStyle = "#d9b48b";
+        ctx.beginPath(); ctx.ellipse(leftEndX, leftEndY+8, 20, 8, 0, 0, 2*Math.PI); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(rightEndX, rightEndY+8, 20, 8, 0, 0, 2*Math.PI); ctx.fill();
+        ctx.fillStyle = "#2c3e2f"; ctx.font = "bold 12px 'Segoe UI'"; ctx.fillText("利益托盘", leftEndX-20, leftEndY);
+        ctx.fillText("诚信托盘", rightEndX+5, rightEndY);
+        ctx.fillStyle = "#0f3b2c"; ctx.font = "italic 10px sans-serif"; ctx.fillText(`利益权重 ${interestWeight}%`, pivotX-30, pivotY-5);
+    }
+    const weightSlider = document.getElementById('interestWeight');
+    const weightSpan = document.getElementById('weightValueDisplay');
+    weightSlider.addEventListener('input', (e) => {
+        currentWeight = parseInt(e.target.value);
+        weightSpan.innerText = currentWeight + "%";
+        drawBalance(currentWeight);
+        updateMatchAnalysis();   // 每次滑块变动都重新匹配分析
+    });
+    drawBalance(50);
+
+    // ----------------------------- 4. 测验题库 -----------------------------
+    const quizQuestions = [
+        { text: "1. 根据《会计职业道德基本原则》，会计人员最基本的底线是？", options: ["A. 专业胜任力", "B. 诚信", "C. 保密", "D. 良好职业行为"], correct: "B", explanation: "诚信是会计职业的核心灵魂。" },
+        { text: "2. 康美药业财务造假案中，虚增货币资金的行为主要违反了哪项原则？", options: ["A. 客观公正", "B. 诚信原则", "C. 保密原则", "D. 专业胜任力"], correct: "B", explanation: "严重违背诚信原则。" },
+        { text: "3. 当上级要求提前确认收入以满足业绩指标时，合规做法是？", options: ["A. 唯命是从", "B. 按公司潜规则处理", "C. 依据准则拒绝并留存沟通记录", "D. 忽略不管"], correct: "C", explanation: "依据《会计法》，会计人员有权拒绝违法指令。" },
+        { text: "4. 以下哪个是诚信原则与法律风险的直接关联？", options: ["A. 可能影响团队合作", "B. 虚增利润可能导致证券欺诈罪", "C. 增加税收筹划空间", "D. 降低审计费用"], correct: "B", explanation: "财务造假可能构成《刑法》第161条违规披露罪。" },
+        { text: "5. 从“商鞅立木取信”到现代会计诚信，共同揭示的道理是？", options: ["A. 诚信能够降低交易成本，产生长期价值", "B. 诚信只在古代有用", "C. 会计诚信与法律无关", "D. 诚信会牺牲企业利益"], correct: "A", explanation: "诚信是社会资本，体现“诚信即生产力”。" }
+    ];
+    let quizUserAnswers = new Array(5).fill(null);
+    let quizScore = null;
+
+    function renderQuiz() {
+        const quizDiv = document.getElementById('quizArea');
+        quizDiv.innerHTML = '';
+        quizQuestions.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'quiz-question';
+            qDiv.innerHTML = `<p>${q.text}</p>`;
+            q.options.forEach(opt => {
+                const optDiv = document.createElement('div');
+                optDiv.className = 'quiz-option';
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `quiz_${idx}`;
+                radio.value = opt.charAt(0);
+                radio.addEventListener('change', (e) => {
+                    quizUserAnswers[idx] = e.target.value;
+                });
+                const label = document.createElement('label');
+                label.innerText = opt;
+                optDiv.appendChild(radio);
+                optDiv.appendChild(label);
+                qDiv.appendChild(optDiv);
+            });
+            quizDiv.appendChild(qDiv);
+        });
+    }
+    renderQuiz();
+
+    // 更新天平与测验的匹配分析（核心新增功能）
+    function updateMatchAnalysis() {
+        if (quizScore === null) {
+            document.getElementById('matchText').innerHTML = "尚未完成测验。请完成右侧5道微测验后，系统将结合您的天平权重给出诚信匹配指数。";
+            return;
+        }
+        const scorePercent = (quizScore / 5) * 100;
+        const interestWeight = currentWeight;
+        // 匹配逻辑：测验得分反映“诚信认知”，天平权重反映“现实利益倾向”
+        let analysis = "";
+        let recommendation = "";
+        if (scorePercent >= 80 && interestWeight <= 40) {
+            analysis = "优秀诚信素养。";
+            recommendation = "您具备高度职业道德认知且能理性权衡利益，是未来资本市场的可靠守护者。";
+        } else if (scorePercent >= 80 && interestWeight > 70) {
+            analysis = "认知高但易受利益诱惑。";
+            recommendation = "您虽然知道诚信原则，但天平显示您对短期利益敏感。建议通过角色扮演强化底线思维。";
+        } else if (scorePercent < 60 && interestWeight <= 40) {
+            analysis = "认知有待提升，但态度端正。";
+            recommendation = "测验分数较低，请重点复习《会计法》及康美案教训；您的利益权重控制良好，保持并加强理论学习。";
+        } else if (scorePercent < 60 && interestWeight > 70) {
+            analysis = "高风险倾向。";
+            recommendation = "诚信认知不足且过度看重短期利益，极易在职场中失守。强烈建议重新学习诚信原则与法律后果案例。";
+        } else {
+            analysis = "中等匹配，需强化诚信价值观。";
+            recommendation = "您的测验成绩和利益权重处于中间区域，建议参与小组辩论和诚信宣誓活动，进一步内化职业道德。";
+        }
+        document.getElementById('matchText').innerHTML = `📊 测验得分：${quizScore}/5 (${scorePercent}分) | 利益权重：${interestWeight}%<br>
+        <strong>匹配结论：${analysis}</strong><br>💡 个性化建议：${recommendation}`;
+    }
+
+    const submitQuizBtn = document.getElementById('submitQuizBtn');
+    const quizScoreDiv = document.getElementById('quizScoreFeedback');
+    submitQuizBtn.addEventListener('click', () => {
+        let correctCount = 0;
+        const results = [];
+        quizQuestions.forEach((q, i) => {
+            const userAns = quizUserAnswers[i];
+            const isCorrect = (userAns === q.correct);
+            if (isCorrect) correctCount++;
+            results.push(`第${i+1}题: ${userAns ? userAns : '未答'} (正确答案${q.correct}) — ${isCorrect ? '✓' : '✗'} ${!isCorrect ? q.explanation : ''}`);
+        });
+        quizScore = correctCount;
+        const percent = (correctCount/5)*100;
+        quizScoreDiv.style.display = 'block';
+        quizScoreDiv.innerHTML = `<strong>📊 测验得分：${correctCount}/5 (${percent}分)</strong><br>${results.join('<br>')}<br>💡 诚信原则内化度：${percent>=80 ? '优秀' : (percent>=60 ? '合格，继续加强' : '待提升，建议复习案例')}`;
+        updateMatchAnalysis();   // 提交测验后立即匹配天平分析
+    });
+
+    // ----------------------------- 5. 导出报告（含天平+测验匹配结论）-----------------------------
+    function getCurrentDecisionText() {
+        if (!selectedDecision) return "尚未做出情景选择";
+        if (selectedDecision === 'A') return "直接拒绝并报告 (坚守诚信)";
+        if (selectedDecision === 'B') return "协商解释，引导合规";
+        return "违规操作 (高风险行为)";
+    }
+    function getQuizDetail() {
+        if (quizScore === null) return "未完成测验";
+        return `${quizScore}/5 (${(quizScore/5)*100}分)`;
+    }
+    function getMatchDetail() {
+        if (quizScore === null) return "未完成测验，无法生成匹配分析";
+        const matchDivContent = document.getElementById('matchText').innerHTML;
+        return matchDivContent;
+    }
+    function exportReport() {
+        const studentName = document.getElementById('studentName').value.trim() || "未填";
+        const studentId = document.getElementById('studentId').value.trim() || "未填";
+        const decisionRecord = getCurrentDecisionText();
+        const feedback = decisionFeedbackText || (selectedDecision ? getFeedbackByChoice(selectedDecision) : "尚未提交抉择反馈");
+        const weightVal = currentWeight;
+        const quizStatus = getQuizDetail();
+        const matchAnalysis = getMatchDetail();
+        const now = new Date().toLocaleString();
+        const reportContent = `
+==========================================
+   《会计职业道德》诚信决策报告
+==========================================
+姓名：${studentName}              学号：${studentId}
+生成时间：${now}
+
+一、情景压力测试结果
+----------------------------------------
+面临“提前确认收入”压力时，您的选择是：
+${decisionRecord}
+即时反馈与解析：
+${feedback}
+
+二、诚信天平权衡记录
+----------------------------------------
+短期利益权重设定：${weightVal}%
+→ 天平倾斜度提示：${weightVal>70 ? '⚠️ 利益权重大于70%，历史上大多数会计人员后悔未能坚守诚信' : '⚖️ 诚信权重占优，职业道德基础良好'}
+
+三、诚信原则微测验成绩
+----------------------------------------
+${quizStatus}
+
+四、天平与测验匹配分析（课程思政个性化评价）
+----------------------------------------
+${matchAnalysis}
+
+五、职业行为改进承诺（参考模板）
+----------------------------------------
+基于以上模拟与反思，我承诺：
+1. 在真实职场中，面对任何财务数据造假压力，坚决依据《会计法》《证券法》拒绝违规指令；
+2. 主动向审计委员会或监管部门报告利益冲突场景；
+3. 坚持“不做假账”，以专业能力服务高质量发展。
+
+学生电子签名：__________________
+        `;
+        const blob = new Blob([reportContent], {type: 'text/plain;charset=utf-8'});
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `诚信决策报告_${studentName}_${studentId}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+    document.getElementById('exportReportBtn').addEventListener('click', exportReport);
+</script>
+</body>
+</html>
